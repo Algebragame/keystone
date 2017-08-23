@@ -1,6 +1,6 @@
 const events = require('events');
 
-const AppEmitter = function(){
+const APIEmitter = function(){
 	this.onItemUpdate = (oldItem, updatedItem) => {
 		this.emit('itemUpdate', {
 			old: oldItem,
@@ -9,6 +9,6 @@ const AppEmitter = function(){
 	};
 }
 
-AppEmitter.prototype = new events.EventEmitter;
+APIEmitter.prototype = new events.EventEmitter;
 
-module.exports = AppEmitter;
+module.exports = APIEmitter;
