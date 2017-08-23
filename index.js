@@ -4,6 +4,7 @@ var grappling = require('grappling-hook');
 var path = require('path');
 var utils = require('keystone-utils');
 var importer = require('./lib/core/importer');
+const AppEmitter = require('./admin/client/App/AppEmitter');
 
 /**
  * Don't use process.cwd() as it breaks module encapsulation
@@ -43,6 +44,7 @@ var Keystone = function () {
 
 	// expose express
 	this.express = express;
+	this.appEmitter = new AppEmitter();
 
 	// init environment defaults
 	this.set('env', process.env.NODE_ENV || 'development');
