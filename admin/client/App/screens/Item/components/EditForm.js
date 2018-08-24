@@ -156,6 +156,19 @@ var EditForm = React.createClass({
 			}
 		});
 	},
+	exportPDF () {
+		console.log(this.props);
+		const type = this.props.list.id;
+		const id = this.props.data.id;
+
+		$.get(`/pdf/${type}/${id}`, function(data) {
+			const URL = data.pdfURL;
+			window.open(URL, '_blank');
+		})
+		.fail(() => {
+			alert('Oops, something went wrong. Please try again later or contact the admins');
+		});
+	},
 	renderKeyOrId () {
 		var className = 'EditForm__key-or-id';
 		var list = this.props.list;
@@ -279,6 +292,20 @@ var EditForm = React.createClass({
 						>
 							{loadingButtonText}
 						</LoadingButton>
+					)}
+					{['puzzles', 'subscribers'].indexOf(this.props.list.id) > -1 && (
+						<Button
+							color="primary"
+							disabled={loading}
+							loading={loading}
+							onClick={this.exportPDF}
+							data-button="export"
+						>
+							<ResponsiveText
+								hiddenXS="export PDF"
+								visibleXS="export"
+							/>
+						</Button>
 					)}
 					{!this.props.list.noedit && (
 						<Button disabled={loading} onClick={this.toggleResetDialog} variant="link" color="cancel" data-button="reset">
