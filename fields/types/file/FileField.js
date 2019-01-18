@@ -172,6 +172,11 @@ module.exports = Field.create({
 			);
 		}
 	},
+	renderPreviewButton () {
+		return (
+			<a href={'/upload/' + this.getFilename()} target='_blank'>Preview</a>
+		);
+	},
 	renderActionInput () {
 		// If the user has selected a file for uploading, we need to point at
 		// the upload field. If the file is being deleted, we submit that.
@@ -198,6 +203,7 @@ module.exports = Field.create({
 					{this.hasFile() ? 'Change' : 'Upload'} File
 				</Button>
 				{this.hasFile() && this.renderClearButton()}
+				{this.hasFile() && this.renderPreviewButton()}
 			</div>
 		);
 
