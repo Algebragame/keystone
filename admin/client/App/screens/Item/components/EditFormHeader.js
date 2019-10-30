@@ -17,6 +17,18 @@ export const EditFormHeader = React.createClass({
 		list: React.PropTypes.object,
 		toggleCreate: React.PropTypes.func,
 	},
+	clone () {
+		console.log(this.props);
+		const type = this.props.list.id;
+		const id = this.props.data.id;
+
+		$.post(`/clone/${type}/${id}`, function(data) {
+			window.location.repalce(`/keystone/${type}`);
+		})
+		.fail(() => {
+			alert('Oops, something went wrong. Please try again later or contact the admins');
+		});
+	},
 	getInitialState () {
 		return {
 			searchString: '',
@@ -126,8 +138,24 @@ export const EditFormHeader = React.createClass({
 	renderInfo () {
 		return (
 			<ToolbarSection right>
+				{this.renderCloneButton()}
 				{this.renderCreateButton()}
 			</ToolbarSection>
+		);
+	},
+	renderCloneButton () {
+		const { nocreate, autocreate, singular } = this.props.list;
+
+		if (nocreate) return null;
+
+		let props = {
+			onClick: () => { this.clone(); }
+		};
+		//props.onClick = () => { this.clone(); };
+		return (
+			<GlyphButton data-e2e-item-create-button="true" color="success" style={{marginRight: 15 + 'px'}} glyph="plus" position="left" {...props}>
+				<ResponsiveText hiddenXS={`Clone ${singular}`} visibleXS="Clone" />
+			</GlyphButton>
 		);
 	},
 	renderCreateButton () {
