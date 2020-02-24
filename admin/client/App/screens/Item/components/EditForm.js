@@ -169,6 +169,19 @@ var EditForm = React.createClass({
 			alert('Oops, something went wrong. Please try again later or contact the admins');
 		});
 	},
+	exportLatex(){
+		const type = this.props.list.id;
+		const id = this.props.data.id;
+		$.get(`/latex/${type}/${id}`, function(data,res){
+			const status = data.status;
+			console.log("The status is:",status);
+			const URL = data.latexURL;
+			console.log(URL);
+			window.open(URL, '_blank');
+		}).fail(() =>{
+			alert('Oops, something went wrong. Please try again later or contact the admins');
+		});
+	},
 	renderKeyOrId () {
 		var className = 'EditForm__key-or-id';
 		var list = this.props.list;
@@ -303,6 +316,19 @@ var EditForm = React.createClass({
 						>
 							<ResponsiveText
 								hiddenXS="export PDF"
+								visibleXS="export"
+							/>
+						</Button>
+					)}
+					{!this.props.list.noedit && (
+						<Button
+							color={"primary"}
+							disabled={loading}
+							loading={loading}
+							onClick={this.exportLatex}
+							data-button="exportLatex">
+							<ResponsiveText
+								hiddenXS="export Latex"
 								visibleXS="export"
 							/>
 						</Button>
