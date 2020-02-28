@@ -175,7 +175,7 @@ var EditForm = React.createClass({
 		$.get(`/latex/${type}/${id}`, function(data,res){
 			const status = data.status;
 			console.log("The status is:",status);
-			const URL = data.latexURL;
+			const URL = "https://nemobotweb.appspot.com/showMCQ?id="+id;
 			console.log(URL);
 			window.open(URL, '_blank');
 		}).fail(() =>{
